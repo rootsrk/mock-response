@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./ResponseForm.scss";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import ButtonComponent from "../Button/Button";
 
 function ResponseForm(props) {
   return (
@@ -19,7 +20,9 @@ function ResponseForm(props) {
           <Form.Label>HTTP response</Form.Label>
           <Form.Control as="textarea" rows="20" />
         </Form.Group>
-        <Button variant="primary">Create Mock Response</Button>
+        <div className="create-btn-container">
+          <ButtonComponent variant="primary" text="Create Mock Response" />
+        </div>
       </Form>
     </div>
   );

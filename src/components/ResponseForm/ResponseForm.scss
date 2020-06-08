@@ -1,3 +1,9 @@
 .response-form-container {
   padding: 20px;
+
+  .create-btn-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 }

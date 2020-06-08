@@ -1,0 +1,12 @@
+.button-container {
+  .btn-primary {
+    background-color: #282c34;
+    border-color: #282c34;
+    padding: 10px 30px;
+    border-radius: 30px;
+
+    &:hover {
+      background-color: #181874;
+    }
+  }
+}
