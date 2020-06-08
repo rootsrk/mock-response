@@ -23,6 +23,10 @@ function ResponseForm(props) {
     return true;
   };
 
+  const createMockResponseURL = () => {
+    console.log(mockResponseParams);
+  };
+
   const setMockResponseParam = (paramName, value) => {
     let newResponseObject = Object.assign({}, mockResponseParams);
     const stringifiedValue = JSON.stringify(value);
@@ -96,7 +100,11 @@ function ResponseForm(props) {
           />
         </Form.Group>
         <div className="create-btn-container">
-          <ButtonComponent variant="primary" text="Create Mock Response" />
+          <ButtonComponent
+            variant="primary"
+            text="Create Mock Response"
+            onClick={createMockResponseURL}
+          />
         </div>
       </Form>
     </div>
