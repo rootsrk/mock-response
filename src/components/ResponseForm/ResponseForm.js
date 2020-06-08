@@ -7,8 +7,8 @@ import ButtonComponent from "../Button/Button";
 function ResponseForm(props) {
   const [mockResponseParams, setParams] = useState({
     httpResponseName: "",
-    httpHeader: {},
-    httpResponse: null
+    httpHeader: "",
+    httpResponse: ""
   });
 
   const [showHeaderError, setHeaderErrorFlag] = useState(false);
@@ -16,7 +16,7 @@ function ResponseForm(props) {
 
   const checkJSONErrors = (jsonObj) => {
     try {
-      eval(JSON.parse(jsonObj));
+      JSON.parse(jsonObj);
     } catch {
       return false;
     }
@@ -29,27 +29,27 @@ function ResponseForm(props) {
 
   const setMockResponseParam = (paramName, value) => {
     let newResponseObject = Object.assign({}, mockResponseParams);
-    const stringifiedValue = JSON.stringify(value);
-    let hasValidJSON = false;
+    const parsedVal = value.replace(/'/g, '"');
+    const isValidJSON = checkJSONErrors(parsedVal);
+    const stringifiedValue = isValidJSON ? JSON.parse(parsedVal) : value;
 
     switch (paramName) {
       case "httpResponseName":
         newResponseObject.httpResponseName = value;
         break;
       case "httpHeader":
-        hasValidJSON = checkJSONErrors(stringifiedValue) && eval(value);
-        if (hasValidJSON) {
-          newResponseObject.httpHeader = value;
-        }
-        setHeaderErrorFlag(!hasValidJSON);
+        newResponseObject.httpHeader = isValidJSON
+          ? JSON.stringify(stringifiedValue || value, null, 4)
+          : value;
+
+        setHeaderErrorFlag(!isValidJSON);
 
         break;
       case "httpResponse":
-        hasValidJSON = checkJSONErrors(stringifiedValue) && eval(value);
-        if (hasValidJSON) {
-          newResponseObject.httpResponse = value;
-        }
-        setResponseErrorFlag(!hasValidJSON);
+        newResponseObject.httpResponse = isValidJSON
+          ? JSON.stringify(stringifiedValue || value, null, 4)
+          : value;
+        setResponseErrorFlag(!isValidJSON);
 
         break;
       default:
@@ -82,6 +82,7 @@ function ResponseForm(props) {
             as="textarea"
             rows="5"
             onChange={(e) => setMockResponseParam("httpHeader", e.target.value)}
+            value={mockResponseParams.httpHeader}
           />
         </Form.Group>
         <Form.Group controlId="httpResponse">
@@ -97,6 +98,7 @@ function ResponseForm(props) {
             onChange={(e) =>
               setMockResponseParam("httpResponse", e.target.value)
             }
+            value={mockResponseParams.httpResponse}
           />
         </Form.Group>
         <div className="create-btn-container">
