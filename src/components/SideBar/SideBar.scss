@@ -1,0 +1,19 @@
+.sidebar-container {
+  color: white;
+
+  .menu-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+
+    .menu-item {
+      padding: 20px;
+
+      &:hover {
+        background-color: #181874;
+      }
+    }
+
+  }
+}
